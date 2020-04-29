@@ -23,9 +23,18 @@ class PostsController < ApplicationController
 		@post = Post.find(params[:id])
 	end
 
-	def update
-	  @post = Post.find(params[:id])
-	  @post.update(title: params[:title], description: params[:description])
-	  redirect_to post_path(@post)
+	#def update
+	  #@post = Post.find(params[:id])
+	  #@post.update(title: params[:title], description: params[:description])
+	  #redirect_to post_path(@post)
+	#end
+
+	#Because form_for is bound directly with the Post model, we need to pass the model name into the Active Record update method in the controller. 
+
+	def update 
+		@post = Post.find(params[:id])
+		@post.update(params.require(:post).permit(:title, :description))
+		redirect_to post_path(@post)
 	end
+	
 end
